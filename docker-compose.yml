@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  provider:
+    build: ./docker_h2
+    container_name: provider_app_main
+    ports:
+      - "8888:8888"
+
+  consumer:
+    build: ./docker_consume
+    container_name: consumer_app_main
+    ports:
+      - "8889:8889"
+    depends_on:
+      - provider
+    environment:
+      - PROVIDER_URL=http://provider:8888/get
